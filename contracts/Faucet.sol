@@ -2,7 +2,9 @@
 pragma solidity >=0.4.22 <0.9.0;
 
 contract Faucet {
-    uint256 public funds = 1000;
-    int256 public counter = -10;
-    uint256 public test = 0;
+    //special function called when you make a transaction that doesnt specify function name to call
+    //ext func part of contract interface which means they can be called  via contracts and other transactions
+    receive() external payable {}
+    //nonce - a hash that proves that the blockhas gone through pow
+    //8 bytes
 }
