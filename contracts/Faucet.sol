@@ -6,9 +6,13 @@ contract Faucet {
     //ext func part of contract interface which means they can be called  via contracts and other transactions
     receive() external payable {}
 
-    //nonce - a hash that proves that the blockhas gone through pow
+    //nonce - a hahttps://github.com/Jerga99/faucet-coursesh that proves that the blockhas gone through pow
     //8 bytes
+
     address[] public funders;
+
+    //private accessible onlu within smart contract
+    //internal can be accessible within smart contract and also derived smart contract
 
     function addFunds() external payable {
         funders.push(msg.sender);
