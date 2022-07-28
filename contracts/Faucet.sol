@@ -8,14 +8,19 @@ contract Faucet {
 
     //nonce - a hahttps://github.com/Jerga99/faucet-coursesh that proves that the blockhas gone through pow
     //8 bytes
-
-    address[] public funders;
+    uint256 public numOfFunders;
+    mapping(address => bool) private funders;
+    mapping(uint256 => address) private lutFunders;
 
     //private accessible onlu within smart contract
     //internal can be accessible within smart contract and also derived smart contract
 
     function addFunds() external payable {
-        funders.push(msg.sender);
+        address funder = msg.sender;
+        if (!funders[funder]) {
+            funders[funder] = true;
+            lutFunders[numOfFunders++] = funder;
+        }
     }
 
     function testing() external pure returns (uint256) {
@@ -27,12 +32,17 @@ contract Faucet {
     //pure, view - read only (no gas fee)
     //transactions - gas fee
     //to talk to node on netweork u can make json-rpc calls
-    function getAllFunders() public view returns (address[] memory) {
-        return funders;
+
+    function getAllFunders() external view returns (address[] memory) {
+        address[] memory _funders = new address[](numOfFunders);
+
+        for (uint256 i = 0; i < numOfFunders; i++) {
+            _funders[i] = lutFunders[i];
+        }
+        return _funders;
     }
 
     function getFunderAtIndex(uint8 index) external view returns (address) {
-        address[] memory _funders = getAllFunders();
-        return _funders[index];
+        return lutFunders[index];
     }
 }
